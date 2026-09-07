@@ -161,5 +161,14 @@ msgstr "剪贴板文本"
 msgid "Paste into browser"
 msgstr "粘贴到浏览器"
 #: src/vnc.tsx:1
+msgid "Mobile address"
+msgstr "手机地址"
+#: src/vnc.tsx:1
+msgid "Type a URL on your phone"
+msgstr "在手机上输入网址"
+#: src/vnc.tsx:1
+msgid "Go"
+msgstr "前往"
+#: src/vnc.tsx:1
 msgid "Remote copied text appears here. Select it to copy it to your computer."
 msgstr "从远程复制的文本会显示在这里。选中文本即可复制到您的计算机。"

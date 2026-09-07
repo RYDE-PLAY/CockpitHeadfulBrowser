@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { createRemoteFormServer } from '../fixtures/remote-form-server.mjs';
 
 const cockpitUrl = process.env.COCKPIT_TEST_URL || 'http://127.0.0.1:9099/cockpit/@localhost/cockpit-browser/index.html';
 
@@ -40,5 +41,19 @@ test('renders the remote canvas in a mobile WebKit viewport', async ({ page }) =
   expect(dimensions.screen?.height).toBeGreaterThan(0);
   expect(dimensions.canvas?.width).toBeGreaterThan(0);
   expect(dimensions.canvas?.height).toBeGreaterThan(0);
+  const mobileInput = page.getByTestId('mobile-address-input');
+  await expect(mobileInput).toBeVisible();
+  await page.getByTestId('remote-address-focus').click();
+  await expect(mobileInput).toBeFocused();
+  const fixture = createRemoteFormServer();
+  const fixtureUrl = await fixture.start();
+  try {
+    await mobileInput.fill(`${fixtureUrl}/remote`);
+    await expect(page.getByRole('button', { name: 'Go', exact: true })).toBeEnabled();
+    await page.getByRole('button', { name: 'Go', exact: true }).click();
+    await expect.poll(() => fixture.remoteReadyCount, { timeout: 10_000 }).toBeGreaterThan(0);
+  } finally {
+    await fixture.close();
+  }
   expect(errors).toEqual([]);
 });

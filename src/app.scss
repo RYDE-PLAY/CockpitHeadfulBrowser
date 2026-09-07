@@ -52,6 +52,8 @@
     background: var(--pf-t--global--background--color--primary--default);
 }
 .browser-vnc-actions { flex-wrap: wrap; }
+.browser-mobile-address { display: flex; align-items: center; gap: var(--pf-t--global--spacer--sm); margin-block-start: var(--pf-t--global--spacer--sm); }
+.browser-mobile-address .pf-v6-c-form-control { min-width: 0; flex: 1 1 auto; }
 .browser-state-copy { display: flex; align-items: center; gap: var(--pf-t--global--spacer--sm); }
 .browser-checks { display: grid; gap: var(--pf-t--global--spacer--sm); margin-block: var(--pf-t--global--spacer--md); }
 .browser-empty-card { min-height: 18rem; display: grid; place-items: center; }

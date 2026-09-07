@@ -26,7 +26,7 @@ npx playwright install webkit
 PLAYWRIGHT_WEBKIT=1 npx playwright test --config test/browser/playwright.config.mjs --project=webkit-mobile
 ```
 
-该测试使用 iPhone 13 视口，检查 noVNC 内层屏幕和实际 canvas 都有非零尺寸，并检查页面错误。它不能替代真实 iPhone/iPad 上的触摸、地址栏输入和全屏验收。
+该测试使用 iPhone 13 视口，检查 noVNC 内层屏幕和实际 canvas 都有非零尺寸，并通过受控 HTTP fixture 验证手机地址输入桥能导航远程浏览器。它不能替代真实 iPhone/iPad 上的系统键盘、触摸和全屏验收。
 
 `scripts/test-server.sh` 会绑定回环地址 `127.0.0.1:9099`，为测试建立隔离的 `.dev-config/` 和 `.dev-data/`，配置允许该地址的页面和 WebSocket Origin，并从当前 checkout 的 `dist/` 提供 `cockpit-browser`。默认测试地址是：
 
