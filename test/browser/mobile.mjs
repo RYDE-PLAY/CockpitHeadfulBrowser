@@ -60,6 +60,12 @@ test('renders the remote canvas in a mobile WebKit viewport', async ({ page }) =
     await expect(page.getByRole('button', { name: 'Go', exact: true })).toBeEnabled();
     await page.getByRole('button', { name: 'Go', exact: true }).click();
     await expect.poll(() => fixture.remoteReadyCount, { timeout: 10_000 }).toBeGreaterThan(0);
+    const pageInput = page.getByTestId('mobile-page-input');
+    await expect(pageInput).toBeVisible();
+    await pageInput.fill('mobile form value');
+    await page.getByTestId('mobile-page-send').click();
+    await page.getByTestId('mobile-page-enter').click();
+    await expect.poll(() => fixture.submittedValue, { timeout: 10_000 }).toBe('mobile form value');
   } finally {
     await fixture.close();
   }

@@ -170,5 +170,23 @@ msgstr "在手机上输入网址"
 msgid "Go"
 msgstr "前往"
 #: src/vnc.tsx:1
+msgid "Mobile page text"
+msgstr "手机页面文本"
+#: src/vnc.tsx:1
+msgid "Type text for the focused page field"
+msgstr "为当前网页输入框输入文字"
+#: src/vnc.tsx:1
+msgid "Send to page"
+msgstr "发送到网页"
+#: src/vnc.tsx:1
+msgid "Press Enter"
+msgstr "按回车"
+#: src/vnc.tsx:1
+msgid "Backspace"
+msgstr "退格"
+#: src/vnc.tsx:1
+msgid "Tap a form field in the remote page first."
+msgstr "请先点击远程页面中的表单输入框。"
+#: src/vnc.tsx:1
 msgid "Remote copied text appears here. Select it to copy it to your computer."
 msgstr "从远程复制的文本会显示在这里。选中文本即可复制到您的计算机。"

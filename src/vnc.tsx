@@ -15,11 +15,13 @@ export const VncSurface = forwardRef<HTMLDivElement, SurfaceProps>(({ socket, qu
     const rootRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLDivElement>(null);
     const mobileAddressRef = useRef<HTMLInputElement>(null);
+    const mobilePageTextRef = useRef<HTMLInputElement>(null);
     const rfbRef = useRef<RFB | null>(null);
     const qualityRef = useRef(quality);
     const [connected, setConnected] = useState(false);
     const [touchDevice, setTouchDevice] = useState(false);
     const [mobileAddress, setMobileAddress] = useState("");
+    const [mobilePageText, setMobilePageText] = useState("");
     const [clipboardOpen, setClipboardOpen] = useState(false);
     const [clipboard, setClipboard] = useState("");
     const [connectionError, setConnectionError] = useState("");
@@ -129,6 +131,21 @@ export const VncSurface = forwardRef<HTMLDivElement, SurfaceProps>(({ socket, qu
         sendKeyPress(rfb, 0xff0d, "Enter");
         mobileAddressRef.current?.blur();
     };
+    const sendPageText = (pressEnter = false) => {
+        const rfb = rfbRef.current;
+        const value = mobilePageText;
+        if (!rfb || !connected || (!value && !pressEnter)) return;
+        if (value) sendText(rfb, value);
+        if (pressEnter) sendKeyPress(rfb, 0xff0d, "Enter");
+        setMobilePageText("");
+        mobilePageTextRef.current?.focus({ preventScroll: true });
+    };
+    const sendPageKey = (key: number, code: string) => {
+        const rfb = rfbRef.current;
+        if (!rfb || !connected) return;
+        sendKeyPress(rfb, key, code);
+        mobilePageTextRef.current?.focus({ preventScroll: true });
+    };
     const paste = () => {
         rfbRef.current?.clipboardPasteFrom(clipboard);
         shortcut(0x76, "KeyV");
@@ -152,9 +169,10 @@ export const VncSurface = forwardRef<HTMLDivElement, SurfaceProps>(({ socket, qu
                 </Button>
             </div>
             {touchDevice && (
-                <div className="browser-mobile-address" data-testid="mobile-address-bridge">
-                    <TextInput
-                        ref={mobileAddressRef} data-testid="mobile-address-input" type="url"
+                <>
+                    <div className="browser-mobile-address" data-testid="mobile-address-bridge">
+                        <TextInput
+                            ref={mobileAddressRef} data-testid="mobile-address-input" type="url"
                             aria-label={_("Mobile address")} placeholder={_("Type a URL on your phone")}
                             value={mobileAddress} onChange={(_event, value) => setMobileAddress(value)}
                             onKeyDown={event => {
@@ -163,11 +181,44 @@ export const VncSurface = forwardRef<HTMLDivElement, SurfaceProps>(({ socket, qu
                                     submitMobileAddress();
                                 }
                             }}
-                    />
-                    <Button variant="secondary" isDisabled={!connected || !mobileAddress.trim()} onClick={submitMobileAddress}>
-                        {_("Go")}
-                    </Button>
-                </div>
+                        />
+                        <Button variant="secondary" isDisabled={!connected || !mobileAddress.trim()} onClick={submitMobileAddress}>
+                            {_("Go")}
+                        </Button>
+                    </div>
+                    <div className="browser-mobile-page-input" data-testid="mobile-page-input-bridge">
+                        <TextInput
+                            ref={mobilePageTextRef} data-testid="mobile-page-input" type="text"
+                                aria-label={_("Mobile page text")} placeholder={_("Type text for the focused page field")}
+                                value={mobilePageText} onChange={(_event, value) => setMobilePageText(value)}
+                                onKeyDown={event => {
+                                    if (event.key === "Enter") {
+                                        event.preventDefault();
+                                        sendPageText(true);
+                                    }
+                                }}
+                        />
+                        <div className="browser-mobile-page-actions">
+                            <Button
+                                data-testid="mobile-page-send" variant="secondary"
+                                isDisabled={!connected || !mobilePageText}
+                                onClick={() => sendPageText()}
+                            >{_("Send to page")}
+                            </Button>
+                            <Button
+                                data-testid="mobile-page-enter" variant="link" isDisabled={!connected}
+                                onClick={() => sendPageKey(0xff0d, "Enter")}
+                            >{_("Press Enter")}
+                            </Button>
+                            <Button
+                                data-testid="mobile-page-backspace" variant="link" isDisabled={!connected}
+                                onClick={() => sendPageKey(0xff08, "Backspace")}
+                            >{_("Backspace")}
+                            </Button>
+                        </div>
+                    </div>
+                    <p className="browser-mobile-page-help">{_("Tap a form field in the remote page first.")}</p>
+                </>
             )}
             {connectionError && <Alert isInline variant="warning" title={connectionError} />}
             {clipboardOpen && (

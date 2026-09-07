@@ -54,6 +54,10 @@
 .browser-vnc-actions { flex-wrap: wrap; }
 .browser-mobile-address { display: flex; align-items: center; gap: var(--pf-t--global--spacer--sm); margin-block-start: var(--pf-t--global--spacer--sm); }
 .browser-mobile-address .pf-v6-c-form-control { min-width: 0; flex: 1 1 auto; }
+.browser-mobile-page-input { display: flex; align-items: center; flex-wrap: wrap; gap: var(--pf-t--global--spacer--sm); margin-block-start: var(--pf-t--global--spacer--sm); }
+.browser-mobile-page-input .pf-v6-c-form-control { min-width: 12rem; flex: 1 1 16rem; }
+.browser-mobile-page-actions { display: flex; align-items: center; flex-wrap: wrap; gap: var(--pf-t--global--spacer--xs); }
+.browser-mobile-page-help { margin: 0; color: var(--pf-t--global--text--color--subtle); font-size: var(--pf-t--global--font--size--sm); }
 .browser-state-copy { display: flex; align-items: center; gap: var(--pf-t--global--spacer--sm); }
 .browser-checks { display: grid; gap: var(--pf-t--global--spacer--sm); margin-block: var(--pf-t--global--spacer--md); }
 .browser-empty-card { min-height: 18rem; display: grid; place-items: center; }
