@@ -9,9 +9,9 @@ import type RFB from "@novnc/novnc";
 import type { BrowserSettings } from "./api.js";
 
 const _ = cockpit.gettext;
-type SurfaceProps = { socket: string; quality: BrowserSettings["quality"] };
+type SurfaceProps = { socket: string; quality: BrowserSettings["quality"]; width: number; height: number };
 
-export const VncSurface = forwardRef<HTMLDivElement, SurfaceProps>(({ socket, quality }, forwardedRef) => {
+export const VncSurface = forwardRef<HTMLDivElement, SurfaceProps>(({ socket, quality, width, height }, forwardedRef) => {
     const rootRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLDivElement>(null);
     const mobileAddressRef = useRef<HTMLInputElement>(null);
@@ -182,7 +182,10 @@ export const VncSurface = forwardRef<HTMLDivElement, SurfaceProps>(({ socket, qu
                     <p>{_("Remote copied text appears here. Select it to copy it to your computer.")}</p>
                 </div>
             )}
-            <div data-testid="remote-canvas" className="browser-vnc-canvas" ref={canvasRef} />
+            <div
+                data-testid="remote-canvas" className="browser-vnc-canvas" ref={canvasRef}
+                style={{ aspectRatio: `${width} / ${height}` }}
+            />
         </div>
     );
 });

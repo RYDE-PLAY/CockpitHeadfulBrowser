@@ -9,6 +9,7 @@ This is an independent Cockpit application based on the official Starter Kit. It
 - A per-user browser session with a normal browser window rather than an iframe or kiosk page.
 - Live keyboard, mouse, clipboard and navigation controls through noVNC and Cockpit's stream channel.
 - A touch-device address bridge that opens the phone keyboard and sends the entered URL to the remote browser.
+- A responsive remote canvas that fills the available width and keeps the configured browser window's aspect ratio.
 - Light and dark Cockpit themes, fullscreen mode, reconnect, address-bar focus and basic session settings.
 - A private per-user profile and download directory on the server.
 - A user systemd service that starts on demand and stops without exposing a VNC TCP port.

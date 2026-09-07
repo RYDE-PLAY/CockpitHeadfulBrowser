@@ -20,6 +20,7 @@
 - 真实服务生命周期通过：重复启动复用服务、RFB 握手、停止清理 socket 和浏览器进程、重启保留设置。
 - Playwright 在系统安装目录上运行 8 项测试：从 Cockpit 菜单进入页面（包含延迟视频能力检测）；简体中文界面及翻译脚本无初始化异常；真实页面与 VNC 连接；Cockpit 主题事件使工具栏颜色变化且保留同一 canvas；远端地址栏导航、键盘输入及提交表单；中文剪贴板粘贴及远端提交；设置草稿跨轮询保留、非法主页拒绝。另外一项为 HTTP fixture 自测，不将其计作远端交互证明。
 - 新增移动端 WebKit 回归：iPhone 13 模拟视口下，noVNC 内层屏幕和 canvas 均有非零尺寸，页面和控制台无错误，并通过受控 HTTP fixture 验证手机地址输入桥能导航远程浏览器。修复了 WebKit 将 noVNC `height: 100%` 解析为零导致移动端空白的问题；此项仍不替代真实 iOS 设备验收。
+- 画布布局回归通过：桌面和移动视口均以可用宽度铺满，并按照服务器浏览器的实际 framebuffer 宽高比计算高度；canvas 与容器尺寸一致，不再因为固定最小高度产生上下或左右灰边。
 - `make codecheck` 通过：前端 ESLint、Stylelint、TypeScript 及 Python Ruff。可选 mypy/vulture 未安装，未计作通过。`skipLibCheck` 仅跳过第三方类型声明检查。
 - VNC socket 为 0600、其目录为 0700；以 nobody 连接被拒绝。VNC 与 X11 没有新增 TCP 监听。
 - 生产构建使用官方 `.js.gz` / `.css.gz` 资源；Cockpit 已识别系统安装目录。中文语言 Cookie 可取得简体中文翻译资源。

@@ -38,6 +38,31 @@ async function openConnectedPage(page) {
   return canvas;
 }
 
+async function readCanvasGeometry(page) {
+  return page.locator('[data-testid="remote-canvas"]').evaluate(element => {
+    const host = element.getBoundingClientRect();
+    const canvas = element.querySelector('canvas');
+    const rendered = canvas?.getBoundingClientRect();
+    return {
+      host: { width: host.width, height: host.height },
+      canvas: rendered ? { width: rendered.width, height: rendered.height } : null,
+      framebuffer: canvas ? { width: canvas.width, height: canvas.height } : null,
+    };
+  });
+}
+
+async function expectCanvasFillsHost(page) {
+  const geometry = await readCanvasGeometry(page);
+  expect(geometry.host.width).toBeGreaterThan(0);
+  expect(geometry.host.height).toBeGreaterThan(0);
+  expect(geometry.canvas?.width).toBeGreaterThan(0);
+  expect(geometry.canvas?.height).toBeGreaterThan(0);
+  expect(geometry.framebuffer).toBeTruthy();
+  expect(Math.abs(geometry.host.width / geometry.host.height - geometry.framebuffer.width / geometry.framebuffer.height)).toBeLessThan(0.02);
+  expect(Math.abs(geometry.host.width - geometry.canvas.width)).toBeLessThan(1);
+  expect(Math.abs(geometry.host.height - geometry.canvas.height)).toBeLessThan(1);
+}
+
 test.describe('Cockpit browser smoke', () => {
   test('opens from the Cockpit menu even when video capability detection is slow', async ({ page }) => {
     await page.addInitScript(() => {
@@ -81,6 +106,7 @@ test.describe('Cockpit browser smoke', () => {
     else if (readyText) await expect(page.getByText(readyText, { exact: false })).toBeVisible();
     else await expect(page.locator('#app, [data-cockpit-browser-root], main').first()).toBeVisible();
     await openConnectedPage(page);
+    await expectCanvasFillsHost(page);
     expect(consoleErrors, `browser console errors:\n${consoleErrors.join('\n')}`).toEqual([]);
   });
 

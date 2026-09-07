@@ -31,16 +31,24 @@ test('renders the remote canvas in a mobile WebKit viewport', async ({ page }) =
   await expect.poll(hasRenderedCanvas, { timeout: 60_000, message: 'mobile WebKit did not render a non-empty noVNC canvas' }).toBe(true);
 
   const dimensions = await canvasHost.evaluate(element => {
+    const host = element.getBoundingClientRect();
     const screen = element.firstElementChild;
     const canvasElement = element.querySelector('canvas');
     return {
+      host: { width: host.width, height: host.height },
       screen: screen?.getBoundingClientRect(),
       canvas: canvasElement?.getBoundingClientRect(),
+      framebuffer: { width: canvasElement?.width, height: canvasElement?.height },
     };
   });
+  expect(dimensions.host.width).toBeGreaterThan(0);
+  expect(dimensions.host.height).toBeGreaterThan(0);
   expect(dimensions.screen?.height).toBeGreaterThan(0);
   expect(dimensions.canvas?.width).toBeGreaterThan(0);
   expect(dimensions.canvas?.height).toBeGreaterThan(0);
+  expect(Math.abs(dimensions.host.width / dimensions.host.height - dimensions.framebuffer.width / dimensions.framebuffer.height)).toBeLessThan(0.02);
+  expect(Math.abs(dimensions.host.width - dimensions.canvas.width)).toBeLessThan(1);
+  expect(Math.abs(dimensions.host.height - dimensions.canvas.height)).toBeLessThan(1);
   const mobileInput = page.getByTestId('mobile-address-input');
   await expect(mobileInput).toBeVisible();
   await page.getByTestId('remote-address-focus').click();

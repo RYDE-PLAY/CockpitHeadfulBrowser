@@ -118,7 +118,12 @@ isInline variant={notice.variant} title={notice.title}
                     </Card>
                 )}
                 {!status && !notice && <Spinner aria-label={_("Checking browser")} />}
-                {running && status?.socket && <VncSurface ref={surfaceRef} socket={status.socket} quality={status.settings.quality} />}
+                {running && status?.socket && (
+                    <VncSurface
+                        ref={surfaceRef} socket={status.socket} quality={status.settings.quality}
+                        width={status.settings.width} height={status.settings.height}
+                    />
+                )}
                 {!running && (
                     <Card className="browser-empty-card">
                         <CardBody>
