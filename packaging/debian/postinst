@@ -1,0 +1,18 @@
+#!/bin/sh
+set -eu
+
+# The unit is a user service. Refresh only reachable logged-in user managers;
+# never start a browser or fail installation when no user manager is running.
+if command -v loginctl >/dev/null 2>&1 && command -v runuser >/dev/null 2>&1; then
+    loginctl list-users --no-legend 2>/dev/null | while read -r uid user; do
+        [ -n "${uid:-}" ] || continue
+        runtime_dir="/run/user/$uid"
+        [ -S "$runtime_dir/bus" ] || continue
+        runuser -u "$user" -- env \
+            XDG_RUNTIME_DIR="$runtime_dir" \
+            DBUS_SESSION_BUS_ADDRESS="unix:path=$runtime_dir/bus" \
+            systemctl --user daemon-reload >/dev/null 2>&1 || true
+    done
+fi
+
+exit 0

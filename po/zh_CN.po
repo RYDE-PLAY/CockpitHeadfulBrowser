@@ -1,0 +1,165 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: cockpit-browser\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: src/app.tsx:1
+msgid "Browser"
+msgstr "浏览器"
+#: src/app.tsx:1
+msgid "Start browser"
+msgstr "启动浏览器"
+#: src/app.tsx:1
+msgid "Stop browser"
+msgstr "停止浏览器"
+#: src/app.tsx:1
+msgid "Browser settings"
+msgstr "浏览器设置"
+#: src/app.tsx:1
+msgid "Homepage"
+msgstr "主页"
+#: src/app.tsx:1
+msgid "Display size"
+msgstr "显示尺寸"
+#: src/app.tsx:1
+msgid "Image quality"
+msgstr "画质"
+#: src/app.tsx:1
+msgid "Balanced"
+msgstr "均衡"
+#: src/app.tsx:1
+msgid "Sharp"
+msgstr "清晰"
+#: src/app.tsx:1
+msgid "Low bandwidth"
+msgstr "省流量"
+#: src/app.tsx:1
+msgid "Keep running"
+msgstr "持续运行"
+#: src/app.tsx:1
+msgid "30 minutes"
+msgstr "30 分钟"
+#: src/app.tsx:1
+msgid "Fullscreen"
+msgstr "全屏"
+#: src/vnc.tsx:1
+msgid "Focus address bar"
+msgstr "聚焦地址栏"
+#: src/vnc.tsx:1
+msgid "Paste clipboard"
+msgstr "粘贴剪贴板"
+#: src/vnc.tsx:1
+msgid "Explicit clipboard paste"
+msgstr "明确粘贴剪贴板"
+#: src/vnc.tsx:1
+msgid "Remote browser"
+msgstr "远程浏览器"
+#: src/vnc.tsx:1
+msgid "Connecting to browser…"
+msgstr "正在连接浏览器…"
+#: src/app.tsx:1
+msgid "Stopped"
+msgstr "已停止"
+#: src/app.tsx:1
+msgid "Starting"
+msgstr "启动中"
+#: src/app.tsx:1
+msgid "Running"
+msgstr "运行中"
+#: src/app.tsx:1
+msgid "Failed"
+msgstr "失败"
+#: src/app.tsx:1
+msgid "Refresh"
+msgstr "刷新"
+#: src/app.tsx:1
+msgid "Settings"
+msgstr "设置"
+#: src/app.tsx:1
+msgid "Checking browser"
+msgstr "正在检查浏览器"
+#: src/app.tsx:1
+msgid "Finish setting up the browser"
+msgstr "完成浏览器设置"
+#: src/app.tsx:1
+msgid "Install the missing dependencies, then refresh this page."
+msgstr "安装缺少的依赖后刷新此页面。"
+#: src/app.tsx:1
+msgid "A browser on your server"
+msgstr "服务器上的浏览器"
+#: src/app.tsx:1
+msgid "Use a full browser with tabs and an address bar. Your profile and downloads stay on this server."
+msgstr "使用带有标签页和地址栏的完整浏览器。您的配置文件和下载内容保存在此服务器上。"
+#: src/app.tsx:1
+msgid "Downloads and session details"
+msgstr "下载和会话详情"
+#: src/app.tsx:1
+msgid "Downloads are saved to"
+msgstr "下载内容保存到"
+#: src/app.tsx:1
+msgid "Use Cockpit Files to transfer files between this server and your computer."
+msgstr "使用 Cockpit 文件在此服务器和您的计算机之间传输文件。"
+#: src/app.tsx:1
+msgid "Disconnecting keeps the browser running until the configured timeout. Stopping keeps your saved browser data."
+msgstr "断开连接后浏览器会运行到设定的超时时间。停止浏览器会保留已保存的数据。"
+#: src/app.tsx:1
+msgid "Other windows signed in as this user share this browser session."
+msgstr "以此用户登录的其他窗口会共享此浏览器会话。"
+#: src/app.tsx:1
+msgid "Preparing your browser…"
+msgstr "正在准备浏览器…"
+#: src/app.tsx:1
+msgid "Width"
+msgstr "宽度"
+#: src/app.tsx:1
+msgid "Height"
+msgstr "高度"
+#: src/app.tsx:1
+msgid "Stop when no windows are connected"
+msgstr "没有窗口连接时停止"
+#: src/app.tsx:1
+msgid "1 hour"
+msgstr "1 小时"
+#: src/app.tsx:1
+msgid "Save"
+msgstr "保存"
+#: src/app.tsx:1
+msgid "Cancel"
+msgstr "取消"
+#: src/app.tsx:1
+msgid "Restore defaults"
+msgstr "恢复默认值"
+#: src/app.tsx:1
+msgid "Settings saved. Restart the session to apply homepage, size and timeout changes."
+msgstr "设置已保存。重启会话以应用主页、尺寸和超时更改。"
+#: src/vnc.tsx:1
+msgid "Connected"
+msgstr "已连接"
+#: src/vnc.tsx:1
+msgid "Connecting…"
+msgstr "正在连接…"
+#: src/vnc.tsx:1
+msgid "Clipboard"
+msgstr "剪贴板"
+#: src/vnc.tsx:1
+msgid "Reconnect"
+msgstr "重新连接"
+#: src/vnc.tsx:1
+msgid "Connection lost. Reconnect to continue your session."
+msgstr "连接已断开。重新连接以继续会话。"
+#: src/vnc.tsx:1
+msgid "The graphical session refused this connection."
+msgstr "图形会话拒绝了此连接。"
+#: src/vnc.tsx:1
+msgid "Clipboard text"
+msgstr "剪贴板文本"
+#: src/vnc.tsx:1
+msgid "Paste into browser"
+msgstr "粘贴到浏览器"
+#: src/vnc.tsx:1
+msgid "Remote copied text appears here. Select it to copy it to your computer."
+msgstr "从远程复制的文本会显示在这里。选中文本即可复制到您的计算机。"

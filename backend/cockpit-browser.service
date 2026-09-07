@@ -1,0 +1,12 @@
+[Unit]
+Description=Private browser session for Cockpit
+After=default.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /usr/libexec/cockpit-browser/session.py run
+TimeoutStartSec=45
+TimeoutStopSec=20
+KillMode=mixed
+UMask=0077
+Restart=no

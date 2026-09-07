@@ -1,0 +1,19 @@
+#!/bin/sh
+set -eu
+
+# Stop only this package's user unit when a user's manager is reachable.
+# Do not remove profiles/downloads or affect any other service.  Managers may
+# be absent during package removal, so every stop attempt is best effort.
+if command -v loginctl >/dev/null 2>&1 && command -v runuser >/dev/null 2>&1; then
+    loginctl list-users --no-legend 2>/dev/null | while read -r uid user; do
+        [ -n "${uid:-}" ] || continue
+        runtime_dir="/run/user/$uid"
+        [ -S "$runtime_dir/bus" ] || continue
+        runuser -u "$user" -- env \
+            XDG_RUNTIME_DIR="$runtime_dir" \
+            DBUS_SESSION_BUS_ADDRESS="unix:path=$runtime_dir/bus" \
+            systemctl --user stop cockpit-browser.service >/dev/null 2>&1 || true
+    done
+fi
+
+exit 0

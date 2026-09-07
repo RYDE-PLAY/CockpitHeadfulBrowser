@@ -1,0 +1,11 @@
+Package: cockpit-browser
+Version: 0.1.0
+Section: admin
+Priority: optional
+Architecture: all
+Maintainer: RYDE-PLAY contributors
+Description: Cockpit module for an interactive browser session
+ Cockpit Headful Browser provides a Cockpit frontend and per-user session
+ helper for displaying and controlling a browser window on the server.
+Depends: cockpit-bridge (>= 346), python3, tigervnc-standalone-server, openbox, dbus-x11, x11-utils, xauth, wmctrl
+Recommends: fonts-noto-cjk, chromium-browser | chromium, fcitx5, fcitx5-pinyin, fcitx5-module-xorg

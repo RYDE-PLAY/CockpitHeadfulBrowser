@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="addon">
+  <id>org.cockpit_project.browser</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <name>Browser</name>
+  <summary>Use an interactive browser running on your server</summary>
+  <description>
+    <p>
+      Open a private browser session with tabs, an address bar, clipboard
+      transfer, persistent settings and a Cockpit-aware light or dark interface.
+    </p>
+  </description>
+  <extends>org.cockpit_project.cockpit</extends>
+  <launchable type="cockpit-manifest">cockpit-browser</launchable>
+  <url type="homepage">https://github.com/RYDE-PLAY/CockpitHeadfulBrowser</url>
+  <url type="bugtracker">https://github.com/RYDE-PLAY/CockpitHeadfulBrowser/issues</url>
+  <developer id="org.ryde-play.cockpit-browser">
+    <name>RYDE-PLAY contributors</name>
+  </developer>
+</component>
