@@ -1,4 +1,20 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
+
+const projects = [
+  {
+    name: 'chromium',
+    testMatch: '**/smoke.mjs',
+    use: { browserName: 'chromium' },
+  },
+];
+
+if (process.env.PLAYWRIGHT_WEBKIT) {
+  projects.push({
+    name: 'webkit-mobile',
+    testMatch: '**/mobile.mjs',
+    use: { ...devices['iPhone 13'], browserName: 'webkit' },
+  });
+}
 
 export default defineConfig({
   testDir: '.',
@@ -11,10 +27,6 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   workers: 1,
   reporter: process.env.CI ? [['line'], ['html', { outputFolder: '/tmp/cockpit-browser-playwright-report', open: 'never' }]] : 'line',
-  use: {
-    browserName: 'chromium',
-    headless: true,
-    screenshot: 'only-on-failure',
-    trace: 'retain-on-failure',
-  },
+  projects,
+  use: { headless: true, screenshot: 'only-on-failure', trace: 'retain-on-failure' },
 });

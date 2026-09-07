@@ -68,7 +68,7 @@ Treat sites opened in the server browser as server-side activity. The browser ca
 
 ## Current limitations
 
-Chromium may show a restore-pages prompt after a forced or interrupted stop. Native IME behavior, audio/video, drag-and-drop uploads, Safari/Firefox clients, automatic resolution negotiation, multi-user session handoff and long-duration performance measurements are not part of the first validated release. The current validation record is in [docs/TEST_RESULTS.zh-CN.md](docs/TEST_RESULTS.zh-CN.md).
+Chromium may show a restore-pages prompt after a forced or interrupted stop. Native IME behavior, audio/video, drag-and-drop uploads, real iOS/iPadOS devices, Firefox clients, automatic resolution negotiation, multi-user session handoff and long-duration performance measurements are not part of the first validated release. A mobile WebKit viewport regression is included in the testing guide; the current validation record is in [docs/TEST_RESULTS.zh-CN.md](docs/TEST_RESULTS.zh-CN.md).
 
 ## License
 

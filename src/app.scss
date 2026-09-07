@@ -55,7 +55,10 @@
 .browser-state-copy { display: flex; align-items: center; gap: var(--pf-t--global--spacer--sm); }
 .browser-checks { display: grid; gap: var(--pf-t--global--spacer--sm); margin-block: var(--pf-t--global--spacer--md); }
 .browser-empty-card { min-height: 18rem; display: grid; place-items: center; }
-.browser-vnc-canvas { min-height: min(70vh, 54rem); flex: 1 1 25rem; display: flex; justify-content: center; align-items: center; overflow: hidden; background: var(--pf-t--global--background--color--secondary--default); }
+.browser-vnc-canvas { min-height: min(70vh, 54rem); flex: 1 1 25rem; display: flex; flex-direction: column; justify-content: center; align-items: stretch; overflow: hidden; background: var(--pf-t--global--background--color--secondary--default); }
+// noVNC sets its screen to height: 100%; WebKit resolves that percentage to
+// zero when this flex item only has a min-height, so let flexbox size it.
+.browser-vnc-canvas > div { width: 100%; height: auto !important; min-width: 0; min-height: 0; flex: 1 1 auto; }
 .browser-vnc-canvas canvas { max-width: 100%; height: auto; }
 .browser-downloads { color: var(--pf-t--global--text--color--subtle); font-size: var(--pf-t--global--font--size--sm); }
 .browser-downloads code { margin-inline: var(--pf-t--global--spacer--xs); }
