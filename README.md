@@ -32,6 +32,8 @@ make deb
 sudo apt install ./cockpit-browser_0.1.0_all.deb
 ```
 
+Maintainers can push an `X.Y.Z` tag (for example, `0.1.1`) to build the package automatically. GitHub Actions attaches the `.deb`, its SHA-256 checksum and the source archive to the corresponding GitHub Release; pull requests and `main` builds keep a 14-day package artifact for review.
+
 Refresh Cockpit, open **Tools → Browser**, and click **Start browser**. The package installs the frontend under `/usr/share/cockpit/cockpit-browser`, the helper under `/usr/libexec/cockpit-browser/session.py`, and the user unit under `/usr/lib/systemd/user/cockpit-browser.service`.
 
 The package never asks for a browser password and does not require a separate sudo-only user. The browser is launched as the logged-in Cockpit user. Chinese-language installation notes cover dependency checks, Snap details, upgrades and uninstall behavior: [docs/INSTALL.zh-CN.md](docs/INSTALL.zh-CN.md).

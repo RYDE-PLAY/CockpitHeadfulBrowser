@@ -1,0 +1,129 @@
+name: Build packages
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+    tags:
+      # Cockpit's package metadata uses the numeric tag as the release name.
+      - '[0-9]*'
+  workflow_dispatch:
+
+# The build only needs to read the repository. The release job below grants
+# write access explicitly when it creates a GitHub Release for a version tag.
+permissions:
+  contents: read
+
+concurrency:
+  group: debian-package-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package:
+    runs-on: ubuntu-22.04
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y dpkg-dev gettext make
+
+      - name: Install JavaScript dependencies
+        run: npm ci
+
+      - name: Run checks
+        run: make check
+
+      - name: Determine package version
+        id: version
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ "$GITHUB_REF_TYPE" == tag ]]; then
+            version="$GITHUB_REF_NAME"
+          else
+            version="$(node -p "require('./package.json').version")"
+          fi
+
+          if [[ ! "$version" =~ ^[0-9]+(\.[0-9]+)*$ ]]; then
+            echo "error: '$version' is not a supported Debian package version" >&2
+            exit 1
+          fi
+
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Build Debian package
+        run: make deb VERSION="${{ steps.version.outputs.version }}"
+
+      - name: Build source archive for a release
+        if: github.ref_type == 'tag'
+        run: make dist VERSION="${{ steps.version.outputs.version }}"
+
+      - name: Verify package metadata and checksum
+        shell: bash
+        run: |
+          set -euo pipefail
+          package="cockpit-browser_${{ steps.version.outputs.version }}_all.deb"
+          test -f "$package"
+          test "$(dpkg-deb --showformat='${Version}' --show "$package")" = "${{ steps.version.outputs.version }}"
+          dpkg-deb --info "$package"
+          sha256sum "$package" > "$package.sha256"
+
+      - name: Upload CI artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cockpit-browser-${{ steps.version.outputs.version }}
+          path: |
+            cockpit-browser_${{ steps.version.outputs.version }}_all.deb
+            cockpit-browser_${{ steps.version.outputs.version }}_all.deb.sha256
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload source artifact
+        if: github.ref_type == 'tag'
+        uses: actions/upload-artifact@v4
+        with:
+          name: cockpit-browser-source-${{ steps.version.outputs.version }}
+          path: cockpit-browser-${{ steps.version.outputs.version }}.tar.xz
+          if-no-files-found: error
+          retention-days: 14
+
+  release:
+    if: github.ref_type == 'tag'
+    needs: package
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - name: Download package artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: cockpit-browser-${{ needs.package.outputs.version }}
+          path: release-assets
+
+      - name: Download source artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: cockpit-browser-source-${{ needs.package.outputs.version }}
+          path: release-assets
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" release-assets/* \
+            --verify-tag \
+            --title "Cockpit Headful Browser ${GITHUB_REF_NAME}" \
+            --generate-notes
