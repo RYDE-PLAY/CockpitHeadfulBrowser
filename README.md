@@ -2,7 +2,7 @@
 
 Cockpit Headful Browser adds a real browser window to the Cockpit web console. It runs Chromium or Chrome on the server and streams the complete window through Cockpit, so the page keeps its address bar, tabs, navigation buttons, downloads, keyboard input and mouse interaction.
 
-This is an independent Cockpit application based on the official Starter Kit. It is not an official Cockpit Project application. The source repository is [RYDE-PLAY/CockpitHeadfulBrowser](https://github.com/RYDE-PLAY/CockpitHeadfulBrowser).
+This is not an official Cockpit Project application. It is built with the official [Cockpit Starter Kit](https://github.com/cockpit-project/starter-kit).
 
 ## What it provides
 
@@ -14,7 +14,7 @@ This is an independent Cockpit application based on the official Starter Kit. It
 - A private per-user profile and download directory on the server.
 - A user systemd service that starts on demand and stops without exposing a VNC TCP port.
 
-The browser uses the server's network and credentials are stored in the server-side profile. It does not import the browser profile, cookies or extensions from the administrator's local computer.
+The browser uses the server's network; credentials and browsing data are stored in the server-side profile. It does not import the browser profile, cookies or extensions from the administrator's local computer.
 
 ## Requirements
 
@@ -24,7 +24,7 @@ Ubuntu's Chromium Snap is supported by the current helper, but the Snap must be 
 
 ## Install on Ubuntu/Debian
 
-Build a package from a checkout or download a matching release artifact:
+Build a package from a checkout:
 
 ```sh
 npm ci
@@ -34,7 +34,7 @@ sudo apt install ./cockpit-browser_0.1.0_all.deb
 
 Refresh Cockpit, open **Tools → Browser**, and click **Start browser**. The package installs the frontend under `/usr/share/cockpit/cockpit-browser`, the helper under `/usr/libexec/cockpit-browser/session.py`, and the user unit under `/usr/lib/systemd/user/cockpit-browser.service`.
 
-The package never asks for a browser password and does not require a separate sudo-only user. The browser is launched as the logged-in Cockpit user. See the [Chinese installation guide](docs/INSTALL.zh-CN.md) for dependency checks, Snap details, upgrades and uninstall behavior.
+The package never asks for a browser password and does not require a separate sudo-only user. The browser is launched as the logged-in Cockpit user. Chinese-language installation notes cover dependency checks, Snap details, upgrades and uninstall behavior: [docs/INSTALL.zh-CN.md](docs/INSTALL.zh-CN.md).
 
 ## Development
 
@@ -60,7 +60,7 @@ npx playwright install chromium   # first run only
 npm run test:browser
 ```
 
-The test server listens only on `127.0.0.1:9099`, uses `.dev-config/` and `.dev-data/`, and must never be exposed through a public reverse proxy. `make check` runs the static checks and backend unit tests. The [testing guide](docs/TESTING.zh-CN.md) describes the real GUI coverage and the remaining validation boundaries.
+The test server listens only on `127.0.0.1:9099`, uses `.dev-config/` and `.dev-data/`, and must never be exposed through a public reverse proxy. `make check` runs the static checks and backend unit tests. The [Chinese testing guide](docs/TESTING.zh-CN.md) describes the reproducible GUI checks and their validation boundaries.
 
 ## Security and data
 
@@ -70,7 +70,7 @@ Treat sites opened in the server browser as server-side activity. The browser ca
 
 ## Current limitations
 
-Chromium may show a restore-pages prompt after a forced or interrupted stop. Native IME behavior, audio/video, drag-and-drop uploads, real iOS/iPadOS devices, Firefox clients, automatic resolution negotiation, multi-user session handoff and long-duration performance measurements are not part of the first validated release. A mobile WebKit viewport regression is included in the testing guide; the current validation record is in [docs/TEST_RESULTS.zh-CN.md](docs/TEST_RESULTS.zh-CN.md).
+Chromium may show a restore-pages prompt after a forced or interrupted stop. Native IME behavior, audio/video, drag-and-drop uploads, real iOS/iPadOS devices, Firefox clients, automatic resolution negotiation, multi-user session handoff and long-duration performance measurements are not part of the first validated release. A mobile WebKit viewport regression is included in the testing guide.
 
 ## License
 

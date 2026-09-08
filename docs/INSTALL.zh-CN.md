@@ -39,6 +39,6 @@ rm ~/.local/share/cockpit/cockpit-browser
 
 升级前请保存浏览器工作。升级包会保留用户 profile 和下载目录；浏览器 profile 的跨版本兼容性不保证，重要数据应另行备份。卸载包只移除包文件，默认保留用户数据；如需删除 profile 或下载目录，请在确认具体路径后手工执行。
 
-## 当前验证范围
+## 当前支持范围
 
-Ubuntu 22.04 ARM64、Cockpit 346、Chromium Snap 已完成真实图形交互、主题、中文剪贴板、设置校验和会话生命周期测试。详细证据及未验证项目见 `TEST_RESULTS.zh-CN.md`。AMD64、其他发行版和 Safari 仍需要独立验证。
+首发目标是 Ubuntu 22.04 或更新版本、Cockpit 346 或更新版本，以及 Chromium 或 Chrome。其他发行版、架构、浏览器来源和 Safari 需要在目标环境中单独验证。可复现的开发和 GUI 测试命令见 [浏览器测试指南](TESTING.zh-CN.md)。
