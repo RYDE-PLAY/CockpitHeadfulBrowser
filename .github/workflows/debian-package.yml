@@ -26,10 +26,10 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -82,7 +82,7 @@ jobs:
           sha256sum "$package" > "$package.sha256"
 
       - name: Upload CI artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: cockpit-browser-${{ steps.version.outputs.version }}
           path: |
@@ -93,7 +93,7 @@ jobs:
 
       - name: Upload source artifact
         if: github.ref_type == 'tag'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: cockpit-browser-source-${{ steps.version.outputs.version }}
           path: cockpit-browser-${{ steps.version.outputs.version }}.tar.xz
@@ -108,13 +108,13 @@ jobs:
       contents: write
     steps:
       - name: Download package artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: cockpit-browser-${{ needs.package.outputs.version }}
           path: release-assets
 
       - name: Download source artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: cockpit-browser-source-${{ needs.package.outputs.version }}
           path: release-assets
