@@ -1,8 +1,9 @@
+# Disabled until repository Actions are allowed to create pull requests.
+# Rename this file back to cockpit-lib-update.yml when automatic updates are wanted.
 name: cockpit-lib-update
 on:
   schedule:
     - cron: '0 2 * * 4'
-  # Can also be run manually from the Actions tab.
   workflow_dispatch:
 jobs:
   cockpit-lib-update:
